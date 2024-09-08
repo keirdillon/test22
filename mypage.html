@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keypad with Password</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; background-color: black; display: flex; justify-content: center; align-items: center; flex-direction: column; }
+        .warp-speed { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: black; z-index: 1; }
+        .light-streak { position: absolute; width: 2px; height: 50px; background: yellow; opacity: 0; animation: streak 2s infinite; }
+        @keyframes streak { 0% { transform: translate(-50%, -50%) scale(0.1); opacity: 0; } 50% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 100% { transform: translate(-50%, -50%) scale(3); opacity: 0; } }
+        .input-display { background-color: #333; color: #FFD700; font-size: 2rem; width: 260px; height: 50px; border-radius: 10px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; z-index: 10; }
+        .keypad-container { background-color: #111; border-radius: 20px; padding: 30px; display: grid; grid-template-columns: repeat(3, 80px); grid-template-rows: repeat(4, 80px); gap: 10px; z-index: 10; }
+        .button { background: #333; color: #FFD700; font-size: 2rem; border-radius: 10px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: all 0.2s; }
+        .button-enter { grid-column: span 2; background: #FFD700; color: #000; }
+        .button:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+
+<div class="warp-speed" id="warpContainer"></div>
+<div class="input-display" id="inputDisplay">_</div>
+<div class="keypad-container">
+    <div class="button" onclick="addNumber('7')">7</div>
+    <div class="button" onclick="addNumber('8')">8</div>
+    <div class="button" onclick="addNumber('9')">9</div>
+    <div class="button" onclick="addNumber('4')">4</div>
+    <div class="button" onclick="addNumber('5')">5</div>
+    <div class="button" onclick="addNumber('6')">6</div>
+    <div class="button" onclick="addNumber('1')">1</div>
+    <div class="button" onclick="addNumber('2')">2</div>
+    <div class="button" onclick="addNumber('3')">3</div>
+    <div class="button" onclick="addNumber('0')">0</div>
+    <div class="button button-enter" onclick="validatePassword()">ENTER</div>
+</div>
+
+<script>
+    let input = "", correctPassword = "2372";
+    function addNumber(num) { input += num; document.getElementById('inputDisplay').textContent = input; }
+    function validatePassword() { input === correctPassword ? window.location.href = "about:blank" : showError(); }
+    function showError() { document.getElementById('inputDisplay').textContent = "ACCESS DENIED"; setTimeout(clearInput, 2000); }
+    function clearInput() { input = ""; document.getElementById('inputDisplay').textContent = "_"; }
+    const container = document.getElementById('warpContainer');
+    for (let i = 0; i < 100; i++) { let streak = document.createElement('div'); streak.classList.add('light-streak'); streak.style.left = Math.random() * 100 + 'vw'; streak.style.top = Math.random() * 100 + 'vh'; streak.style.animationDelay = Math.random() * 2 + 's'; streak.style.width = Math.random() * 4 + 2 + 'px'; streak.style.height = Math.random() * 200 + 50 + 'px'; container.appendChild(streak); }
+</script>
+
+</body>
+</html>
